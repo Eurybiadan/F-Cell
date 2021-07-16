@@ -9,15 +9,16 @@ clear;
 % tbDeployToolboxes('registered',{'isetbio', 'BrainardLabToolbox','Psychtoolbox-3','SilentSubstitutionToolbox'})
 
 units = 'trolands';
-stim_lambda = 790; % in nm
-stim_irradiance =  111; % in uW
+stim_lambda = 550; % in nm
+stim_irradiance =  8; % in uW
 
-% num_acquisitions = 13;
-% single_trial_train = [0 1  0;
-%                       4 5  18];
-num_acquisitions = 13;
-single_trial_train = [1 ;
-                      18];
+num_acquisitions = 8;
+single_trial_train = [0 1  0;
+                      4 5  18];
+num_acquisitions = 1;
+single_trial_train = [1  0  0;
+                      600 601 605];
+
 
 trial_train = zeros(2, size(single_trial_train,2).*num_acquisitions);
 for n=1:num_acquisitions
@@ -35,7 +36,7 @@ end
 
 
 
-[~,I] = AOLightLevelConversions_Func(1, stim_lambda, stim_irradiance, true); % Stimulus Intensity in Td
+[~,I] = AOLightLevelConversions_Func(4, stim_lambda, stim_irradiance, true); % Stimulus Intensity in Td
 
 switch (units)
     case 'trolands'

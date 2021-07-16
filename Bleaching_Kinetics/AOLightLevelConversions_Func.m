@@ -19,8 +19,8 @@ end
 for w=1:length(wavelengths)
     
     theWavelength = wavelengths(w);
-    pupilDiamMm = 7;  % 7mm typical
-    eyeLengthMm = 17; % 17mm - lens to retina typical
+    pupilDiamMm = 4;  % 7mm typical, 4mm tree shrew.
+    eyeLengthMm = 4.35; % 17mm - lens to retina typical, 4.35mm lens to retina tree shrew
     
     rawStimulusSideDegIn = stim_side;
     stimulusAreaDegrees2 = rawStimulusSideDegIn^2;
