@@ -8,16 +8,17 @@ clear;
 % close all force;
 % tbDeployToolboxes('registered',{'isetbio', 'BrainardLabToolbox','Psychtoolbox-3','SilentSubstitutionToolbox'})
 
+type = "scotopic"
 units = 'trolands';
-stim_lambda = 790; % in nm
-stim_irradiance =  111; % in uW
+stim_lambda = 514; % in nm
+stim_irradiance =  3.6; % in uW
 
+num_acquisitions = 10;
+single_trial_train = [0 1  0;
+                      2 2.066  10.066];
 % num_acquisitions = 13;
-% single_trial_train = [0 1  0;
-%                       4 5  18];
-num_acquisitions = 13;
-single_trial_train = [1 ;
-                      18];
+% single_trial_train = [1 ;
+%                       18];
 
 trial_train = zeros(2, size(single_trial_train,2).*num_acquisitions);
 for n=1:num_acquisitions
@@ -35,13 +36,28 @@ end
 
 
 
-[~,I] = AOLightLevelConversions_Func(1, stim_lambda, stim_irradiance, true); % Stimulus Intensity in Td
+[~,I_cones, I_rods] = AOLightLevelConversions_Func(1, stim_lambda, stim_irradiance, true); % Stimulus Intensity in Td
+
+if strcmp(type, "photopic")
+    I = I_cones;
+elseif strcmp(type, "scotopic")
+    I = I_rods;
+end
 
 switch (units)
     case 'trolands'
-        I_0 = 10^4.3; % in Td %Stimulus intensity that bleaches at the rate of 1/N
-                      % 73.7 Td for rods, 20000 Td for cones
-        N = 120; % Scaling factor, where 400=rhodopsin, 120=L/M cones.
+        if strcmp(type, "photopic")
+            I_0 = 20000; % in Td %Stimulus intensity that bleaches at the rate of 1/N
+                          % 19,952 Td for rods, 20000 Td for cones
+        
+            N = 120; % Scaling factor, where 400=rhodopsin, 120=L/M cones.
+        elseif strcmp(type, "scotopic")
+            I_0 = 19952; % in Td %Stimulus intensity that bleaches at the rate of 1/N
+                      % 19,952 Td for rods, 20000 Td for cones
+        
+            N = 400; % Scaling factor, where 400=rhodopsin, 120=L/M cones.
+        end
+
     case 'isomerizations'
         I_0 = 10^6.4;
         N = 120; % Scaling factor

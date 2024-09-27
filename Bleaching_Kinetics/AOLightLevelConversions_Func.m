@@ -1,4 +1,4 @@
-function [allLum, allPhotTd] = AOLightLevelConversions_Func(stim_side, wavelengths, um_power_to_eye,verbose)
+function [allLum, allPhotTd, allScotTd] = AOLightLevelConversions_Func(stim_side, wavelengths, um_power_to_eye,verbose)
 %
 % Take monochromatic retinal irradiance and convert it to many other
 % equivalent units.
@@ -150,6 +150,7 @@ for w=1:length(wavelengths)
     end
     allLum(w) = photopicLuminanceCdM2;
     allPhotTd(w) = irradiancePhotTrolands;
+    allScotTd(w) = irradianceScotTrolands;
     
 end
 

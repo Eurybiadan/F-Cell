@@ -85,11 +85,11 @@ for n = 1:num_a_im
     tforms{n} = affine2d(inv(bestH)');
 
     
-    tif_name_out = fullfile(align_path{n},[align_fnames{n}(1:end-4) '_to_' num2str(aligndate) '.tif']);
+    tif_name_out{n} = fullfile(align_path,[align_fnames{n}(1:end-4) '_to_' num2str(aligndate) '.tif']);
     
-    warped_im = imwarp(align_image{n}, imref2d(size(align_image{n})), tforms{n}, 'OutputView', imref2d(size(ref_image)) );
+    warped_im{n} = imwarp(align_image{n}, imref2d(size(align_image{n})), tforms{n}, 'OutputView', imref2d(size(ref_image)) );
     
-    imwrite(uint8(warped_im), tif_name_out);
+    imwrite(uint8(warped_im{n}), char(tif_name_out{n}));
     
     warped_coords{n} = transformPointsForward(affine2d(bestH'),ref_coords);
     
